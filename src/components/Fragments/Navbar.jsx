@@ -35,6 +35,7 @@ const Navbar = () => {
         <NavButton to="/articles" label="Articles" />
         <NavButton to="/calc-it" label="Calc It!" />
         <NavButton to="/about-us" label="About Us" />
+        <NavButton to="/login" label="Login" />
       </div>
     </div>
   );
