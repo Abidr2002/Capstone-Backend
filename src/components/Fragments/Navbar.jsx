@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import NavButton from '../Elements/Navbutton';
-import { Icon } from '@iconify/react';
+import { useState } from "react";
+import NavButton from "../Elements/Navbutton";
+import { Icon } from "@iconify/react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,20 +21,21 @@ const Navbar = () => {
           <Icon
             icon="ph:list"
             className="text-cyan-900 md:hidden"
-            width={'30'}
-            height={'30'}
+            width={"30"}
+            height={"30"}
           />
         </button>
       </div>
       <div
         className={`flex flex-col ${
-          isOpen ? '' : 'hidden md:flex'
+          isOpen ? "" : "hidden md:flex"
         } md:flex-row md:space-x-10 pt-6 md:pt-0 font-medium text-lg md:text-lg`}
       >
         <NavButton to="/" label="Home" />
         <NavButton to="/articles" label="Articles" />
         <NavButton to="/calc-it" label="Calc It!" />
         <NavButton to="/about-us" label="About Us" />
+        {/* Add conditional rendering if there is a */}
       </div>
     </div>
   );
