@@ -32,6 +32,10 @@ const members = [
         name: "Linkedin",
         url: "https://www.linkedin.com/in/prasetya-kusuma-atmaja-15630a29a/",
       },
+      {
+        name: "Linkedin",
+        url: "https://www.linkedin.com/in/prasetya-kusuma-atmaja-15630a29a/",
+      },
       { name: "Github", url: "https://github.com/praset911" },
     ],
   },
