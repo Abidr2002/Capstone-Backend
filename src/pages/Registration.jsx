@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Signup() {
+  const [errorMessage, setErrorMessage] = useState("");
+  
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -20,23 +22,37 @@ function Signup() {
   };
 
   const navigate = useNavigate();
+  const validatePasswordLength = () => {
+    if (formData.password.length <= 10) {
+      setErrorMessage("Password harus memiliki lebih dari 10 karakter");
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+     if (!validatePasswordLength()) {
+      return;
+    }
+
     axios
       .post("http://localhost:8888/register", formData)
       .then((res) => {
         if (res.data.Status === "Success") {
           navigate("/login");
+        }else if (res.data.Error === "Username already registered") {
+          setErrorMessage("Username sudah terdaftar. Silakan pilih username lain.");
+        } else if (res.data.Error === "Email already registered") {
+          setErrorMessage("Email sudah terdaftar. Silakan gunakan email lain.");
         } else {
-          alert("Error");
+          setErrorMessage("Error registering user");
         }
       })
-      .then((err) => console.log(err));
-
-    if (formData.password.length <= 10) {
-      alert("Password harus memiliki lebih dari 10 karakter");
-      return;
-    }
+      .catch((err) => {
+        console.error(err);
+        setErrorMessage("Error registering user");
+      });
   };
   return (
     <div className="flex items-center justify-center mb-8">
@@ -45,6 +61,9 @@ function Signup() {
         className="max-w-lg border-2 rounded-lg inline-block p-6"
       >
         <h1 className="text-2xl mb-4 font-semibold">Sign Up</h1>
+        {errorMessage && (
+          <div className="mb-4 text-red-500">{errorMessage}</div>
+        )}
         <div className="mb-4 flex items-center">
           <div className="border rounded-full p-1 mr-2 flex-shrink-0">
             <FontAwesomeIcon icon={faUser} className="mx-1" />
@@ -122,3 +141,4 @@ function Signup() {
 }
 
 export default Signup;
+
