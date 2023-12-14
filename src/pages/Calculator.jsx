@@ -45,7 +45,8 @@ const Calculator = () => {
       <h4 className="text-center text-zinc-500 font-normal text-xl">
         Welcome to Calc it! <br />
         Maintaining a healthy weight is crucial for overall well-being. <br />
-        Discover your Body Mass Index, Calories needs, and ideal weight with our calculator.
+        Discover your Body Mass Index, Calories needs, and ideal weight with our
+        calculator.
       </h4>
 
       <div className="flex mx-[100px] justify-between py-10 gap-x-20">
@@ -71,13 +72,11 @@ const Calculator = () => {
           <ErrorMessage message={errorMessage} />
         </div>
         <div className="w-[500px] h-[282px">
-          {bmi && calories && bodyWeight && (
-            <ResultDisplay
-              bmi={bmi}
-              calories={calories}
-              bodyWeight={bodyWeight}
-            />
-          )}
+          <ResultDisplay
+            bmi={bmi}
+            calories={calories}
+            bodyWeight={bodyWeight}
+          />
         </div>
       </div>
     </body>

@@ -1,7 +1,9 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -9,6 +11,8 @@ function Login() {
     password: "",
   });
 
+  const navigate = useNavigate();
+  axios.defaults.withCredentials = true;
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -19,14 +23,24 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Lakukan sesuatu dengan data formulir, seperti mengirim ke server
-    console.log("Form data submitted:", formData);
+    axios
+      .post("http://localhost:8888/login", formData)
+      .then((res) => {
+        if (res.data.Status === "Success") {
+          navigate("/");
+        } else {
+          alert("Error");
+        }
+      })
+      .then((err) => console.log(err));
   };
 
   return (
     <div className="flex items-center justify-center mb-8">
-      <form onSubmit={handleSubmit} className="max-w-lg border-2 rounded-lg inline-block p-6">
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-lg border-2 rounded-lg inline-block p-6"
+      >
         <h1 className="text-2xl mb-4 font-semibold">Login</h1>
         <div className="mb-4 flex items-center">
           <div className="border rounded-full p-1 mr-2 flex-shrink-0">
@@ -65,7 +79,10 @@ function Login() {
           </button>
         </div>
         <p className="mt-4">
-          Don't have an account? <Link to="/signup" className="text-blue-500">Sign Up</Link>
+          Don't have an account?{" "}
+          <Link to="/signup" className="text-blue-500">
+            Sign Up
+          </Link>
         </p>
       </form>
     </div>
