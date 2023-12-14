@@ -1,9 +1,11 @@
 import { useState } from "react";
 import NavButton from "../Elements/Navbutton";
 import { Icon } from "@iconify/react";
+import { useAuth } from "./AuthContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, logout } = useAuth();
 
   const handleListClick = () => {
     setIsOpen(!isOpen);
@@ -35,7 +37,18 @@ const Navbar = () => {
         <NavButton to="/articles" label="Articles" />
         <NavButton to="/calc-it" label="Calc It!" />
         <NavButton to="/about-us" label="About Us" />
-        <NavButton to="/login" label="Login" />
+        {user ? (
+          <>
+            {/* Tampilkan ini jika pengguna sudah masuk */}
+            <p>Hello, {user.username}!</p>
+            <button onClick={logout}>Logout</button>
+          </>
+        ) : (
+          <>
+            {/* Tampilkan ini jika pengguna belum masuk */}
+            <NavButton to="/login" label="Login" />
+          </>
+        )}
       </div>
     </div>
   );
