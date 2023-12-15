@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import Carousel from '../components/Fragments/Carousel';
-import Dropdown from '../components/Elements/Dropdown';
-import Card from '../components/Fragments/Card';
+import { useState } from "react";
+import Carousel from "../components/Fragments/Carousel";
+import Dropdown from "../components/Elements/Dropdown";
+import Card from "../components/Fragments/Card";
 
 const Articles = () => {
-  const [sortField, setSortField] = useState('date');
-  const [sortOrder, setSortOrder] = useState('asc');
+  const [sortField, setSortField] = useState("date");
+  const [sortOrder, setSortOrder] = useState("asc");
 
   const handleSortFieldChange = (field) => {
     setSortField(field);

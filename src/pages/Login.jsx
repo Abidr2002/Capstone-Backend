@@ -5,7 +5,7 @@ import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Login() {
+const Login = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -13,6 +13,7 @@ function Login() {
 
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -27,6 +28,7 @@ function Login() {
       .post("http://localhost:8888/login", formData)
       .then((res) => {
         if (res.data.Status === "Success") {
+          window.location.reload();
           navigate("/");
         } else {
           alert("Error");
@@ -87,6 +89,6 @@ function Login() {
       </form>
     </div>
   );
-}
+};
 
 export default Login;

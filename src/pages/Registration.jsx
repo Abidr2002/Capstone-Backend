@@ -1,10 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Signup() {
+const Signup = () => {
   const [errorMessage, setErrorMessage] = useState({
     username: "",
     email: "",
@@ -142,7 +142,6 @@ function Signup() {
           <div className="border rounded-full p-1 mr-2 flex-shrink-0">
             <FontAwesomeIcon icon={faEnvelope} className="mx-1" />
           </div>
-
           <input
             type="text"
             placeholder="Email"
@@ -180,7 +179,7 @@ function Signup() {
             </div>
             <input
               type="password"
-              placeholder="Confirmed Password"
+              placeholder="Confirm Password"
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
@@ -208,7 +207,7 @@ function Signup() {
       </form>
     </div>
   );
-}
+};
 
 export default Signup;
 

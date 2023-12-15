@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { calculateBMI } from "../components/Utils/BMICal";
 import { calculateCalories } from "../components/Utils/CaloriesCal";
 import { calculateBodyWeight } from "../components/Utils/BodyWeightCal";
 import InputForm from "../components/Elements/InputForm";
 import ResultDisplay from "../components/Fragments/ResultDisplay";
+import axios from "axios";
 
 const ErrorMessage = ({ message }) => {
   return <div className="text-red-500 text-sm mt-2">{message}</div>;
@@ -21,7 +22,7 @@ const Calculator = () => {
   const [bodyWeight, setbodyWeight] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleCalculate = () => {
+  const handleCalculate = async () => {
     if (!gender || !weight || !height || !age) {
       setErrorMessage("Please fill the columns");
       return;
@@ -37,6 +38,32 @@ const Calculator = () => {
     setbodyWeight(calculatedbodyWeight);
 
     setErrorMessage("");
+
+    const currentDate = new Date();
+    const formattedDate = currentDate
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " ");
+
+    const dataToSend = {
+      date: formattedDate,
+      age,
+      weight,
+      height,
+      bmi: calculatedBMI,
+      calories: calculatedCalories,
+      bodyWeight: calculatedbodyWeight,
+    };
+
+    try {
+      const res = await axios.post(
+        "http://localhost:8888/save-calc",
+        dataToSend
+      );
+      console.log("Data saved successfully:", res);
+    } catch (error) {
+      console.error("Error saving data:", error);
+    }
   };
 
   return (
