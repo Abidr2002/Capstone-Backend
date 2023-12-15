@@ -28,8 +28,8 @@ const Login = () => {
       .post("http://localhost:8888/login", formData)
       .then((res) => {
         if (res.data.Status === "Success") {
-          window.location.reload();
           navigate("/");
+          window.location.reload();
         } else {
           alert("Error");
         }
