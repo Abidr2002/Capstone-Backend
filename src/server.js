@@ -110,12 +110,8 @@ app.post('/login', (req, res) => {
         } else {
             return res.json({Error: "Username not registered"});
         }
-      });
-    } else {
-      return res.json({ Error: "Username not registered" });
-    }
-  });
-});
+    })
+})
 
 app.post('/save-calc', verifyUser, (req, res) => {
     const { date, age, weight, height, bmi, calories, bodyWeight } = req.body;
