@@ -10,6 +10,17 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
+  const handleLogout = () => {
+    axios
+      .get("http://localhost:8888/logout")
+      .then((res) => {
+        if (res.data.Status === "Success") {
+          window.location.reload();
+        }
+      })
+      .catch((err) => console.error(err));
+  };
+
   const [auth, setAuth] = useState(false);
   const [username, setUsername] = useState("");
   axios.defaults.withCredentials = true;
@@ -19,7 +30,7 @@ const Navbar = () => {
       .get("http://localhost:8888")
       .then((res) => {
         if (res.data.Status === "Success") {
-          setUsername(res.data.username);
+          setUsername(res.data.data);
           setAuth(true);
         } else {
           setAuth(false);
@@ -59,7 +70,10 @@ const Navbar = () => {
             <p className="text-gray-400 py-4 md:py-0 border-b border-stone-400 md:border-0">
               Hello, {username}
             </p>
-            <button className="text-gray-400 py-4 md:py-0 border-b border-stone-400 md:border-0">
+            <button
+              className="text-gray-400 py-4 md:py-0 border-b border-stone-400 md:border-0"
+              onClick={handleLogout}
+            >
               Logout
             </button>
           </>
