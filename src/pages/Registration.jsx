@@ -15,10 +15,17 @@ function Signup() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    if (name === "confirmPassword") {
+      setFormData((prevData) => ({
+        ...prevData,
+        confirmPassword: value,
+      }));
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   const navigate = useNavigate();
@@ -26,16 +33,19 @@ function Signup() {
     if (formData.password.length <= 10) {
       setErrorMessage("Password harus memiliki lebih dari 10 karakter");
       return false;
+    } else if (formData.password !== formData.confirmPassword) {
+      setErrorMessage("Password dan konfirmasi password tidak cocok");
+      return false;
     }
     return true;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-     if (!validatePasswordLength()) {
+    if (!validatePasswordLength()) {
       return;
     }
-
+  
     axios
       .post("http://localhost:8888/register", formData)
       .then((res) => {
@@ -54,6 +64,7 @@ function Signup() {
         setErrorMessage("Error registering user");
       });
   };
+  
   return (
     <div className="flex items-center justify-center mb-8">
       <form
@@ -114,8 +125,8 @@ function Signup() {
             <input
               type="password"
               placeholder="Confirmed Password"
-              name="password"
-              value={formData.password}
+              name="confirmPassword"
+              value={formData.confirmPassword}
               onChange={handleChange}
               className="inputClass w-full"
             />
