@@ -16,18 +16,28 @@ app.use(cors({
 app.use(cookieParser());
 
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "fithub",
+    
 });
 
-app.get('/', (req, res) => {
-    res.send('Hello, this is the Fithub backend!');
+const verifyUser = (req, res, next) => {
+    const token = req.cookies.token;
+    if(!token) {
+        return res.json({Error: "Not Authenticated"});
+    }else{
+        jwt.verify(token, "jwt-key", (err, decoded) => {
+            if(err) return res.json({Error: "Not Correct Token"});
+            req.username = decoded.username;
+            next();
+        })
+    }
+}
+
+app.get('/', verifyUser, (req, res) => {
+    return res.json({Status: "Success", data: req.username});
 });
 
 app.post('/register', (req,res) => {
-    const sql = "INSERT INTO login (`username`, `email`, `password`) VALUES (?)";
+    const sql = "INSERT INTO account (`username`, `email`, `password`) VALUES (?)";
 
     bcrypt.hash(req.body.password.toString(), salt, (err, hash) => {
         if(err) return res.json({Error: "Error hassing password"});
@@ -44,7 +54,7 @@ app.post('/register', (req,res) => {
 })
 
 app.post('/login', (req, res) => {
-    const sql = "SELECT * FROM login WHERE username = ?";
+    const sql = "SELECT * FROM account WHERE username = ?";
     db.query(sql, [req.body.username], (err, data) => {
         if(err) return res.json({Error: "Login error in server"});
         if(data.length > 0){
