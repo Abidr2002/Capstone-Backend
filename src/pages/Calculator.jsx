@@ -7,6 +7,7 @@ import { calculateBodyWeight } from "../components/Utils/BodyWeightCal";
 import InputForm from "../components/Elements/InputForm";
 import ResultDisplay from "../components/Fragments/ResultDisplay";
 import axios from "axios";
+import { useAuth } from "../components/hooks/AuthContext";
 
 const ErrorMessage = ({ message }) => {
   return <div className="text-red-500 text-sm mt-2">{message}</div>;
@@ -21,6 +22,21 @@ const Calculator = () => {
   const [calories, setCalories] = useState(null);
   const [bodyWeight, setbodyWeight] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const { auth } = useAuth();
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:8888/get-calc");
+      // Lakukan sesuatu dengan data yang diterima dari server, misalnya memperbarui state
+      console.log("Data fetched successfully:", response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  if (auth) {
+    fetchData();
+  }
 
   const handleCalculate = async () => {
     if (!gender || !weight || !height || !age) {
@@ -95,7 +111,6 @@ const Calculator = () => {
             setAge={setAge}
             handleCalculate={handleCalculate}
           />
-          {/* Komponen ErrorMessage */}
           <ErrorMessage message={errorMessage} />
         </div>
         <div className="w-[500px] h-[282px">
@@ -106,6 +121,21 @@ const Calculator = () => {
           />
         </div>
       </div>
+      {auth ? (
+        <>
+          <p className="text-center text-sky-800 text-2xl font-bold mt-10">
+            Result History
+          </p>
+          <div className="flex mx-[100px] justify-between py-10 gap-x-20">
+            <div className="w-[500px] h-[282px]">Card</div>
+            <div className="w-[500px] h-[282px">grafik</div>
+          </div>
+        </>
+      ) : (
+        <div className="text-center text-sky-800 text-2xl font-bold">
+          Login to track your caclculations
+        </div>
+      )}
     </body>
   );
 };

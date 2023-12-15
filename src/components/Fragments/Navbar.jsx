@@ -1,43 +1,25 @@
-import { useEffect, useState } from "react";
+// eslint-disable-next-line no-unused-vars
+import React, { useState } from "react";
 import NavButton from "../Elements/Navbutton";
 import { Icon } from "@iconify/react";
-import axios from "axios";
+import { useAuth } from "../hooks/AuthContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { auth, username, logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      window.location.reload();
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  };
 
   const handleListClick = () => {
     setIsOpen(!isOpen);
   };
-
-  const handleLogout = () => {
-    axios
-      .get("http://localhost:8888/logout")
-      .then((res) => {
-        if (res.data.Status === "Success") {
-          window.location.reload();
-        }
-      })
-      .catch((err) => console.error(err));
-  };
-
-  const [auth, setAuth] = useState(false);
-  const [username, setUsername] = useState("");
-  axios.defaults.withCredentials = true;
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:8888")
-      .then((res) => {
-        if (res.data.Status === "Success") {
-          setUsername(res.data.data);
-          setAuth(true);
-        } else {
-          setAuth(false);
-        }
-      })
-      .catch((err) => console.error(err));
-  }, []);
 
   return (
     <div className="bg-white px-5 md:px-10 lg:px-20 py-16 md:py-7 item-center justify-between flex flex-col md:flex-row">
