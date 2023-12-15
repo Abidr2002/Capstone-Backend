@@ -4,7 +4,21 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
+const dotenv = require('dotenv');
+
 const salt = 10;
+const result = dotenv.config();
+
+if (result.error) {
+  console.error('Error loading .env file:', result.error);
+  process.exit(1);
+}
+const jwtSecret = process.env.JWT_SECRET
+const dbHost = process.env.DB_HOST
+const dbUser = process.env.DB_USER 
+const dbPassword = process.env.DB_PASSWORD
+const dbName = process.env.DB_NAME 
+const dbPort = process.env.DB_PORT 
 
 const app = express();
 app.use(express.json());
@@ -18,14 +32,27 @@ app.use(
 app.use(cookieParser());
 
 const db = mysql.createConnection({
+    host: dbHost,
+    user: dbUser,
+    password: dbPassword,
+    database: dbName,
+    port:dbPort
 });
+
+db.connect((err) => {
+    if (err) {
+      console.error('Error connecting to database:', err);
+      return;
+    }
+    console.log('Connected to database!');
+  });
 
 const verifyUser = (req, res, next) => {
     const token = req.cookies.token;
     if(!token) {
         return res.json({Error: "Not Authenticated"});
     }else{
-        jwt.verify(token, "jwt-key", (err, decoded) => {
+        jwt.verify(token, jwtSecret, (err, decoded) => {
             if(err) return res.json({Error: "Not Correct Token"});
             req.username = decoded.username;
             req.userId = decoded.userId;
@@ -141,7 +168,7 @@ app.post('/save-calc', verifyUser, (req, res) => {
 app.get('/get-calc', verifyUser, (req, res) => {
     const userId = req.userId;
 
-    const sql = "SELECT * FROM result WHERE user_id = ?";
+    const sql = "SELECT * FROM result WHERE id_user = ?";
 
     db.query(sql, [userId], (err, result) => {
         if (err) {
@@ -158,6 +185,8 @@ app.get('/logout', (req, res) => {
     return res.json({Status: "Success"});
 })
 
-app.listen(8888, () => {
+const PORT = process.env.PORT || 8888;
+
+app.listen(PORT, () => {
   console.log("Backend server is running!");
 });
