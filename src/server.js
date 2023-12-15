@@ -18,6 +18,11 @@ app.use(
 app.use(cookieParser());
 
 const db = mysql.createConnection({
+  host: "1jn.h.filess.io",
+  user: "fithub_wasteable",
+  password: "ikiPasswordDatabaseCapstoneTer",
+  database: "fithub_wasteable",
+  port: 3307,
 });
 
 app.get("/", (req, res) => {
@@ -29,8 +34,8 @@ app.post("/register", (req, res) => {
   const checkEmailQuery = "SELECT * FROM login WHERE `email` = ?";
   const insertUserQuery = "INSERT INTO login (`username`, `email`, `password`) VALUES (?)";
 
- // Check if username already exists
- db.query(checkUsernameQuery, [req.body.username], (err, usernameResult) => {
+  // Check if username already exists
+  db.query(checkUsernameQuery, [req.body.username], (err, usernameResult) => {
     if (err) {
       return res.status(500).json({ Error: "Error checking username existence" });
     }
