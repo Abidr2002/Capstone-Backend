@@ -18,11 +18,6 @@ app.use(
 app.use(cookieParser());
 
 const db = mysql.createConnection({
-  host: "1jn.h.filess.io",
-  user: "fithub_wasteable",
-  password: "ikiPasswordDatabaseCapstoneTer",
-  database: "fithub_wasteable",
-  port: 3307,
 });
 
 app.get("/", (req, res) => {
@@ -30,9 +25,9 @@ app.get("/", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  const checkUsernameQuery = "SELECT * FROM login WHERE `username` = ?";
-  const checkEmailQuery = "SELECT * FROM login WHERE `email` = ?";
-  const insertUserQuery = "INSERT INTO login (`username`, `email`, `password`) VALUES (?)";
+  const checkUsernameQuery = "SELECT * FROM account WHERE `username` = ?";
+  const checkEmailQuery = "SELECT * FROM account WHERE `email` = ?";
+  const insertUserQuery = "INSERT INTO account (`username`, `email`, `password`) VALUES (?)";
 
   // Check if username already exists
   db.query(checkUsernameQuery, [req.body.username], (err, usernameResult) => {
@@ -44,6 +39,11 @@ app.post("/register", (req, res) => {
     db.query(checkEmailQuery, [req.body.email], (err, emailResult) => {
       if (err) {
         return res.status(500).json({ Error: "Error checking email existence" });
+      }
+
+      // If both username and email already exist, return an error
+      if (usernameResult.length > 0 && emailResult.length > 0) {
+        return res.status(400).json({ Error: "Username and Email already registered" });
       }
 
       // If username already exists, return an error
@@ -77,7 +77,7 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  const sql = "SELECT * FROM login WHERE username = ?";
+  const sql = "SELECT * FROM account WHERE username = ?";
   db.query(sql, [req.body.username], (err, data) => {
     if (err) return res.json({ Error: "Login error in server" });
     if (data.length > 0) {
