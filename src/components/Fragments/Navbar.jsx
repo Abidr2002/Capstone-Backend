@@ -1,15 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavButton from "../Elements/Navbutton";
 import { Icon } from "@iconify/react";
-import { useAuth } from "./AuthContext";
+import axios from "axios";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user, logout } = useAuth();
 
   const handleListClick = () => {
     setIsOpen(!isOpen);
   };
+
+  const [auth, setAuth] = useState(false);
+  const [username, setUsername] = useState("");
+  axios.defaults.withCredentials = true;
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8888")
+      .then((res) => {
+        if (res.data.Status === "Success") {
+          setUsername(res.data.username);
+          setAuth(true);
+        } else {
+          setAuth(false);
+        }
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
     <div className="bg-white px-5 md:px-10 lg:px-20 py-16 md:py-7 item-center justify-between flex flex-col md:flex-row">
@@ -37,17 +54,17 @@ const Navbar = () => {
         <NavButton to="/articles" label="Articles" />
         <NavButton to="/calc-it" label="Calc It!" />
         <NavButton to="/about-us" label="About Us" />
-        {user ? (
+        {auth ? (
           <>
-            {/* Tampilkan ini jika pengguna sudah masuk */}
-            <p>Hello, {user.username}!</p>
-            <button onClick={logout}>Logout</button>
+            <p className="text-gray-400 py-4 md:py-0 border-b border-stone-400 md:border-0">
+              Hello, {username}
+            </p>
+            <button className="text-gray-400 py-4 md:py-0 border-b border-stone-400 md:border-0">
+              Logout
+            </button>
           </>
         ) : (
-          <>
-            {/* Tampilkan ini jika pengguna belum masuk */}
-            <NavButton to="/login" label="Login" />
-          </>
+          <NavButton to="/login" label="Login" />
         )}
       </div>
     </div>

@@ -3,7 +3,6 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../components/Fragments/AuthContext";
 import axios from "axios";
 
 function Login() {
@@ -13,7 +12,6 @@ function Login() {
   });
 
   const navigate = useNavigate();
-  const { login } = useAuth();
   axios.defaults.withCredentials = true;
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,7 +27,6 @@ function Login() {
       .post("http://localhost:8888/login", formData)
       .then((res) => {
         if (res.data.Status === "Success") {
-          login({ username: formData.username });
           navigate("/");
         } else {
           alert("Error");
