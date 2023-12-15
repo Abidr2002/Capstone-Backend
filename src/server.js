@@ -1,26 +1,23 @@
-const express = require('express');
-const mysql = require('mysql');
-const cors = require('cors');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const cookieParser = require('cookie-parser');
+const express = require("express");
+const mysql = require("mysql");
+const cors = require("cors");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
 const salt = 10;
 
 const app = express();
 app.use(express.json());
-app.use(cors({
+app.use(
+  cors({
     origin: ["http://localhost:5173"],
     methods: ["POST", "GET"],
-    credentials: true
-}));
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 
 const db = mysql.createConnection({
-    host: "1jn.h.filess.io",
-    user: "fithub_wasteable",
-    password: "ikiPasswordDatabaseCapstoneTer",
-    database: "fithub_wasteable",
-    port: 3307
 });
 
 const verifyUser = (req, res, next) => {
@@ -41,22 +38,57 @@ app.get('/', verifyUser, (req, res) => {
     return res.json({Status: "Success", userId: req.userId, data: req.username});
 });
 
-app.post('/register', (req,res) => {
-    const sql = "INSERT INTO account (`username`, `email`, `password`) VALUES (?)";
+app.post("/register", (req, res) => {
+  const checkUsernameQuery = "SELECT * FROM account WHERE `username` = ?";
+  const checkEmailQuery = "SELECT * FROM account WHERE `email` = ?";
+  const insertUserQuery = "INSERT INTO account (`username`, `email`, `password`) VALUES (?)";
 
-    bcrypt.hash(req.body.password.toString(), salt, (err, hash) => {
-        if(err) return res.json({Error: "Error hassing password"});
-        const formData = [
-            req.body.username,
-            req.body.email,
-            hash
-        ]
-        db.query(sql, [formData], (err, result) => {
-            if(err) return res.json({Error: "Error registering user"});
-            return res.json({Status: "Success"});
-        })
-    })
-})
+  // Check if username already exists
+  db.query(checkUsernameQuery, [req.body.username], (err, usernameResult) => {
+    if (err) {
+      return res.status(500).json({ Error: "Error checking username existence" });
+    }
+
+    // Check if email already exists
+    db.query(checkEmailQuery, [req.body.email], (err, emailResult) => {
+      if (err) {
+        return res.status(500).json({ Error: "Error checking email existence" });
+      }
+
+      // If both username and email already exist, return an error
+      if (usernameResult.length > 0 && emailResult.length > 0) {
+        return res.status(400).json({ Error: "Username and Email already registered" });
+      }
+
+      // If username already exists, return an error
+      if (usernameResult.length > 0) {
+        return res.status(400).json({ Error: "Username already registered" });
+      }
+
+      // If email already exists, return an error
+      if (emailResult.length > 0) {
+        return res.status(400).json({ Error: "Email already registered" });
+      }
+
+      // If both username and email are unique, proceed with registration
+      bcrypt.hash(req.body.password.toString(), salt, (err, hash) => {
+        if (err) {
+          return res.status(500).json({ Error: "Error hashing password" });
+        }
+
+        const formData = [req.body.username, req.body.email, hash];
+
+        // Insert the new user into the database
+        db.query(insertUserQuery, [formData], (err, result) => {
+          if (err) {
+            return res.status(500).json({ Error: "Error registering user" });
+          }
+          return res.status(201).json({ Status: "Success" });
+        });
+      });
+    });
+  });
+});
 
 app.post('/login', (req, res) => {
     const sql = "SELECT id, username, password FROM account WHERE username = ?";
@@ -78,8 +110,12 @@ app.post('/login', (req, res) => {
         } else {
             return res.json({Error: "Username not registered"});
         }
-    })
-})
+      });
+    } else {
+      return res.json({ Error: "Username not registered" });
+    }
+  });
+});
 
 app.post('/save-calc', verifyUser, (req, res) => {
     const { date, age, weight, height, bmi, calories, bodyWeight } = req.body;
@@ -127,5 +163,5 @@ app.get('/logout', (req, res) => {
 })
 
 app.listen(8888, () => {
-    console.log("Backend server is running!");
+  console.log("Backend server is running!");
 });
