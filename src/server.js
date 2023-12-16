@@ -6,13 +6,10 @@ const argon2 = require("argon2");
 const cookieParser = require("cookie-parser");
 const dotenv = require('dotenv');
 
-const salt = 10;
-const result = dotenv.config();
-
-if (result.error) {
-  console.error('Error loading .env file:', result.error);
-  process.exit(1);
-}
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+  }
+  
 const jwtSecret = process.env.JWT_SECRET
 const dbHost = process.env.DB_HOST
 const dbUser = process.env.DB_USER 
