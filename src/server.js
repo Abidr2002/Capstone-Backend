@@ -8,8 +8,8 @@ const dotenv = require('dotenv');
 
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
-  }
-  
+}
+
 const jwtSecret = process.env.JWT_SECRET
 const dbHost = process.env.DB_HOST
 const dbUser = process.env.DB_USER 
