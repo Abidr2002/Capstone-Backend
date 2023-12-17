@@ -4,7 +4,6 @@ const cors = require("cors");
 const argon2 = require("argon2");
 const dotenv = require('dotenv');
 const session = require("express-session");
-const MemoryStore = require('memorystore')(session);
 
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
@@ -44,9 +43,11 @@ app.use(
       secret: sessionSecret,
       resave: false,
       saveUninitialized: false,
-      store: new MemoryStore({
-        checkPeriod: 86400000,
-      }),
+      cookie: {
+          maxAge: 86400000,
+          httpOnly: true,
+        //   secure: true,
+      },
   })
 );
 
