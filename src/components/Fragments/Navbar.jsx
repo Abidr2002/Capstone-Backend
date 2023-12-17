@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import NavButton from "../Elements/Navbutton";
 import { Icon } from "@iconify/react";
-import { useAuth } from "../hooks/AuthContext";
+import { useAuth } from "../../auth/AuthContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

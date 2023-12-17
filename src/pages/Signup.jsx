@@ -75,7 +75,7 @@ const Signup = () => {
     }
 
     axios
-      .post("https://back-end-fitlife-hub.vercel.app/register", formData)
+      .post("http://localhost:8888/register", formData)
       .then((res) => {
         if (res.data.Status === "Success") {
           navigate("/login");

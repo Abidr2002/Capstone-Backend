@@ -25,7 +25,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("https://back-end-fitlife-hub.vercel.app/login", formData)
+      .post("http://localhost:8888/login", formData)
       .then((res) => {
         if (res.data.Status === "Success") {
           navigate("/");

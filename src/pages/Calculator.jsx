@@ -1,15 +1,15 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from "react";
-import { calculateBMI } from "../components/Utils/BMICal";
-import { calculateCalories } from "../components/Utils/CaloriesCal";
-import { calculateBodyWeight } from "../components/Utils/BodyWeightCal";
+import { calculateBMI } from "../components/Calculation/BMICal";
+import { calculateCalories } from "../components/Calculation/CaloriesCal";
+import { calculateBodyWeight } from "../components/Calculation/BodyWeightCal";
 import InputForm from "../components/Elements/InputForm";
 import ResultDisplay from "../components/Fragments/ResultDisplay";
 import ChartComponent from "../components/Fragments/ChartComponent";
 import NotesHistory from "../components/Fragments/NotesHistory";
 import axios from "axios";
-import { useAuth } from "../components/hooks/AuthContext";
+import { useAuth } from "../auth/AuthContext";
 
 const ErrorMessage = ({ message }) => {
   return <div className="text-red-500 text-sm mt-2">{message}</div>;
@@ -30,9 +30,7 @@ const Calculator = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        "https://back-end-fitlife-hub.vercel.app/get-calc"
-      );
+      const response = await axios.get("http://localhost:8888/get-calc");
       setUserData(response.data.userData);
       console.log("Data fetched successfully:", response.data);
     } catch (error) {
@@ -81,7 +79,7 @@ const Calculator = () => {
 
     try {
       const res = await axios.post(
-        "https://back-end-fitlife-hub.vercel.app/save-calc",
+        "http://localhost:8888/save-calc",
         dataToSend
       );
       console.log("Data saved successfully:", res);
