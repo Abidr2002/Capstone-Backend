@@ -89,6 +89,7 @@ const Signup = () => {
       .catch((err) => {
         console.error(err);
 
+        // Handle kesalahan dengan informasi lebih lanjut
         if (err.response && err.response.data) {
           const { Error } = err.response.data;
           if (Error === "Username and Email already registered") {
@@ -103,13 +104,13 @@ const Signup = () => {
               ...errorMessage,
               username:
                 "Username sudah terdaftar, silakan pilih username lain.",
-              email: "",
+              email: "", // Reset email error
             });
           } else if (Error === "Email already registered") {
             setErrorMessage({
               ...errorMessage,
               email: "Email sudah terdaftar, silakan gunakan email lain.",
-              username: "",
+              username: "", // Reset username error
             });
           } else {
             setErrorMessage({

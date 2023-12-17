@@ -12,6 +12,7 @@ const Login = () => {
   });
 
   const navigate = useNavigate();
+  axios.defaults.withCredentials = true;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,19 +24,17 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     axios
-      .post("http://localhost:8888/login", formData, {
-        credentials: "include",
-      })
+      .post("http://localhost:8888/login", formData)
       .then((res) => {
         if (res.data.Status === "Success") {
           navigate("/");
+          window.location.reload();
         } else {
           alert("Error");
         }
       })
-      .catch((error) => console.error("Error:", error));
+      .then((err) => console.log(err));
   };
 
   return (

@@ -48,8 +48,6 @@ const Calculator = () => {
       const weightData = formattedUserData.map((item) => item.weight);
       const heightData = formattedUserData.map((item) => item.height);
 
-      console.log(dates);
-
       setBmiData(bmiData);
       setDates(dates);
       setWeightData(weightData);
@@ -58,6 +56,7 @@ const Calculator = () => {
       console.error("Error fetching data:", error);
     }
   };
+
   useEffect(() => {
     if (auth) {
       fetchData();
@@ -103,6 +102,12 @@ const Calculator = () => {
         dataToSend
       );
       console.log("Data saved successfully:", res);
+
+      // Update state lokal dengan data baru
+      setBmiData([...bmiData, calculatedBMI]);
+      setDates([...dates, formattedDate]);
+      setWeightData([...weightData, weight]);
+      setHeightData([...heightData, height]);
     } catch (error) {
       console.error("Error saving data:", error);
     }
@@ -139,7 +144,7 @@ const Calculator = () => {
           />
           <ErrorMessage message={errorMessage} />
         </div>
-        <div className="w-[500px] h-[282px]">
+        <div className="w-[500px] h-[282px">
           <ResultDisplay
             bmi={bmi}
             calories={calories}
@@ -154,7 +159,7 @@ const Calculator = () => {
           </p>
           <div className="flex mx-[100px] justify-between py-10 gap-x-20">
             <div className="w-[500px] h-[282px]">Card</div>
-            <div className="w-[500px] h-[282px]">
+            <div className="w-[500px] h-[282px">
               <ChartComponent
                 bmiData={bmiData}
                 dates={dates}

@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8888")
+      .get("http://localhost:8888/")
       .then((res) => {
         if (res.data.Status === "Success") {
           setUsername(res.data.data);
