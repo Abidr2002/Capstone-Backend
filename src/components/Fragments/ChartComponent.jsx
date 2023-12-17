@@ -9,7 +9,18 @@ import {
   Legend,
 } from "recharts";
 
-const ChartComponent = ({ bmiData, dates, weightData, heightData }) => {
+const formatDate = (isoDate) => {
+  const date = new Date(isoDate);
+  return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+};
+
+const ChartComponent = ({ userData }) => {
+  // Extracting necessary data from userData
+  const bmiData = userData.map((result) => result.bmi).reverse();
+  const dates = userData.map((result) => formatDate(result.date)).reverse();
+  const weightData = userData.map((result) => result.weight).reverse();
+  const heightData = userData.map((result) => result.height).reverse();
+
   const chartData = dates.map((date, index) => ({
     date,
     BMI: bmiData[index],

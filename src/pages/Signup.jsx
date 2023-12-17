@@ -75,7 +75,7 @@ const Signup = () => {
     }
 
     axios
-      .post("http://localhost:8888/register", formData)
+      .post("https://back-end-fitlife-hub.vercel.app/register", formData)
       .then((res) => {
         if (res.data.Status === "Success") {
           navigate("/login");
@@ -153,7 +153,7 @@ const Signup = () => {
             <FontAwesomeIcon icon={faEnvelope} className="mx-1" />
           </div>
           <input
-            type="text"
+            type="email"
             placeholder="Email"
             name="email"
             value={formData.email}
