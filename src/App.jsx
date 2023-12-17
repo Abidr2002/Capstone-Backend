@@ -6,7 +6,7 @@ import Articles from "./pages/Articles";
 import Calculator from "./pages/Calculator";
 import AboutUs from "./pages/AboutUs";
 import Login from "./pages/Login";
-import Signup from "./pages/registration";
+import Signup from "./pages/Signup";
 import { AuthProvider } from "./components/hooks/AuthContext";
 const App = () => {
   return (
