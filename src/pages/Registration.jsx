@@ -12,7 +12,7 @@ const Signup = () => {
     confirmPassword: "",
     general: "",
   });
-  
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -29,7 +29,7 @@ const Signup = () => {
     }));
     setErrorMessage((prevErrors) => ({
       ...prevErrors,
-      [name]: "",  // Reset error message for the current input
+      [name]: "", // Reset error message for the current input
       general: "", // Reset general error message
     }));
   };
@@ -42,7 +42,10 @@ const Signup = () => {
         password: "Password harus memiliki lebih dari 10 karakter",
       });
       return false;
-    } else if (formData.password !== formData.confirmPassword && formData.confirmPassword.length > 0) {
+    } else if (
+      formData.password !== formData.confirmPassword &&
+      formData.confirmPassword.length > 0
+    ) {
       setErrorMessage({
         ...errorMessage,
         confirmPassword: "Password dan konfirmasi password tidak cocok",
@@ -54,7 +57,12 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.username || !formData.email || !formData.password || !formData.confirmPassword) {
+    if (
+      !formData.username ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
       setErrorMessage({
         ...errorMessage,
         general: "Lengkapi seluruh formulir untuk mendaftar.",
@@ -67,7 +75,7 @@ const Signup = () => {
     }
 
     axios
-      .post("http://localhost:8888/register", formData)
+      .post("https://back-end-fitlife-hub.vercel.app/register", formData)
       .then((res) => {
         if (res.data.Status === "Success") {
           navigate("/login");
@@ -87,13 +95,15 @@ const Signup = () => {
           if (Error === "Username and Email already registered") {
             setErrorMessage({
               ...errorMessage,
-              username: "Username sudah terdaftar, silakan pilih username lain.",
-              email:  "Email sudah terdaftar, silakan gunakan email lain.", 
+              username:
+                "Username sudah terdaftar, silakan pilih username lain.",
+              email: "Email sudah terdaftar, silakan gunakan email lain.",
             });
-          }else if (Error === "Username already registered") {
+          } else if (Error === "Username already registered") {
             setErrorMessage({
               ...errorMessage,
-              username: "Username sudah terdaftar, silakan pilih username lain.",
+              username:
+                "Username sudah terdaftar, silakan pilih username lain.",
               email: "", // Reset email error
             });
           } else if (Error === "Email already registered") {
@@ -111,7 +121,7 @@ const Signup = () => {
         }
       });
   };
-  
+
   return (
     <div className="flex items-center justify-center mb-8">
       <form
@@ -169,8 +179,8 @@ const Signup = () => {
             />
           </div>
           {errorMessage.password && (
-          <div className="text-red-500">{errorMessage.password}</div>
-        )}
+            <div className="text-red-500">{errorMessage.password}</div>
+          )}
         </div>
         <div className="mb-4">
           <div className="flex items-center">
@@ -187,8 +197,8 @@ const Signup = () => {
             />
           </div>
           {errorMessage.confirmPassword && (
-          <div className="text-red-500">{errorMessage.confirmPassword}</div>
-        )}
+            <div className="text-red-500">{errorMessage.confirmPassword}</div>
+          )}
         </div>
         <div className="flex justify-center">
           <button
@@ -210,4 +220,3 @@ const Signup = () => {
 };
 
 export default Signup;
-

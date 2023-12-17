@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { calculateBMI } from "../components/Utils/BMICal";
 import { calculateCalories } from "../components/Utils/CaloriesCal";
 import { calculateBodyWeight } from "../components/Utils/BodyWeightCal";
 import InputForm from "../components/Elements/InputForm";
 import ResultDisplay from "../components/Fragments/ResultDisplay";
+import ChartComponent from "../components/Fragments/ChartComponent";
 import axios from "axios";
 import { useAuth } from "../components/hooks/AuthContext";
 
@@ -24,19 +25,46 @@ const Calculator = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const { auth } = useAuth();
+  const [bmiData, setBmiData] = useState([]);
+  const [dates, setDates] = useState([]);
+  const [weightData, setWeightData] = useState([]);
+  const [heightData, setHeightData] = useState([]);
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8888/get-calc");
-      // Lakukan sesuatu dengan data yang diterima dari server, misalnya memperbarui state
-      console.log("Data fetched successfully:", response.data);
+      const response = await axios.get(
+        "https://back-end-fitlife-hub.vercel.app/get-calc"
+      );
+
+      const userData = response.data.userData;
+
+      const formattedUserData = userData.map((item) => ({
+        ...item,
+        date: new Date(item.date),
+      }));
+
+      const bmiData = formattedUserData.map((item) => item.bmi);
+      const dates = formattedUserData.map((item) =>
+        item.date.toLocaleDateString()
+      );
+      const weightData = formattedUserData.map((item) => item.weight);
+      const heightData = formattedUserData.map((item) => item.height);
+
+      console.log(dates);
+
+      setBmiData(bmiData);
+      setDates(dates);
+      setWeightData(weightData);
+      setHeightData(heightData);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-  if (auth) {
-    fetchData();
-  }
+  useEffect(() => {
+    if (auth) {
+      fetchData();
+    }
+  }, [auth]);
 
   const handleCalculate = async () => {
     if (!gender || !weight || !height || !age) {
@@ -73,7 +101,7 @@ const Calculator = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:8888/save-calc",
+        "https://back-end-fitlife-hub.vercel.app/save-calc",
         dataToSend
       );
       console.log("Data saved successfully:", res);
@@ -128,7 +156,14 @@ const Calculator = () => {
           </p>
           <div className="flex mx-[100px] justify-between py-10 gap-x-20">
             <div className="w-[500px] h-[282px]">Card</div>
-            <div className="w-[500px] h-[282px">grafik</div>
+            <div className="w-[500px] h-[282px">
+              <ChartComponent
+                bmiData={bmiData}
+                dates={dates}
+                weightData={weightData}
+                heightData={heightData}
+              />
+            </div>
           </div>
         </>
       ) : (

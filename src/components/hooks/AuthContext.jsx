@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8888")
+      .get("https://back-end-fitlife-hub.vercel.app/")
       .then((res) => {
         if (res.data.Status === "Success") {
           setUsername(res.data.data);
@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
     try {
       // Gantilah URL dan body request sesuai dengan API login yang Anda miliki
       const response = await axios.post(
-        "http://localhost:8888/login",
+        "https://back-end-fitlife-hub.vercel.app/login",
         userData
       );
 
@@ -47,8 +47,9 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      // Gantilah URL sesuai dengan API logout yang Anda miliki
-      const response = await axios.get("http://localhost:8888/logout");
+      const response = await axios.get(
+        "https://back-end-fitlife-hub.vercel.app/logout"
+      );
 
       if (response.data.Status === "Success") {
         setUsername("");
