@@ -12,7 +12,6 @@ const Login = () => {
   });
 
   const navigate = useNavigate();
-  axios.defaults.withCredentials = true;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,17 +23,19 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     axios
-      .post("https://back-end-fitlife-hub.vercel.app/login", formData)
+      .post("http://localhost:8888/login", formData, {
+        credentials: "include",
+      })
       .then((res) => {
         if (res.data.Status === "Success") {
           navigate("/");
-          window.location.reload();
         } else {
           alert("Error");
         }
       })
-      .then((err) => console.log(err));
+      .catch((error) => console.error("Error:", error));
   };
 
   return (

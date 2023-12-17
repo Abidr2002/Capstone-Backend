@@ -32,9 +32,7 @@ const Calculator = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        "https://back-end-fitlife-hub.vercel.app/get-calc"
-      );
+      const response = await axios.get("http://localhost:8888/get-calc");
 
       const userData = response.data.userData;
 
@@ -101,7 +99,7 @@ const Calculator = () => {
 
     try {
       const res = await axios.post(
-        "https://back-end-fitlife-hub.vercel.app/save-calc",
+        "http://localhost:8888/save-calc",
         dataToSend
       );
       console.log("Data saved successfully:", res);
@@ -141,7 +139,7 @@ const Calculator = () => {
           />
           <ErrorMessage message={errorMessage} />
         </div>
-        <div className="w-[500px] h-[282px">
+        <div className="w-[500px] h-[282px]">
           <ResultDisplay
             bmi={bmi}
             calories={calories}
@@ -156,7 +154,7 @@ const Calculator = () => {
           </p>
           <div className="flex mx-[100px] justify-between py-10 gap-x-20">
             <div className="w-[500px] h-[282px]">Card</div>
-            <div className="w-[500px] h-[282px">
+            <div className="w-[500px] h-[282px]">
               <ChartComponent
                 bmiData={bmiData}
                 dates={dates}

@@ -75,7 +75,7 @@ const Signup = () => {
     }
 
     axios
-      .post("https://back-end-fitlife-hub.vercel.app/register", formData)
+      .post("http://localhost:8888/register", formData)
       .then((res) => {
         if (res.data.Status === "Success") {
           navigate("/login");
@@ -89,7 +89,6 @@ const Signup = () => {
       .catch((err) => {
         console.error(err);
 
-        // Handle kesalahan dengan informasi lebih lanjut
         if (err.response && err.response.data) {
           const { Error } = err.response.data;
           if (Error === "Username and Email already registered") {
@@ -104,13 +103,13 @@ const Signup = () => {
               ...errorMessage,
               username:
                 "Username sudah terdaftar, silakan pilih username lain.",
-              email: "", // Reset email error
+              email: "",
             });
           } else if (Error === "Email already registered") {
             setErrorMessage({
               ...errorMessage,
               email: "Email sudah terdaftar, silakan gunakan email lain.",
-              username: "", // Reset username error
+              username: "",
             });
           } else {
             setErrorMessage({
