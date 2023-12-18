@@ -1,8 +1,13 @@
-# React + Vite
+**TEMA CAPSTONE**: Kesejahteraan penduduk
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**NAMA WEBSITE**: Fit Life Hub
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**TUTORIAL MENJALANKAN WEBSITE**:
+1. Tambahkan file ke dalam penyimpanan perangkat. Adapun, file yang harus ditambahkan terdiri dari 2:
+   - Folder front-end
+   - Folder back-end (https://github.com/Abidr2002/Fitlife-Hub/tree/Back-End) 
+2. Buka kedua folder dengan window yang berbeda pada code editor yang digunakan.
+3. Jalankan perintah npm install di terminal pada masing-masing folder.
+4. Jalankan perintah npm start pada folder back-end.
+5. Kemudian, jalankan perintah npm run dev pada folder front-end
+6. Buka port yang muncul setelah menjalankan perintah npm run dev di folder front-end
