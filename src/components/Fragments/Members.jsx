@@ -44,9 +44,9 @@ const members = [
     role: "Back-End Developer",
     imageSrc: "/images/profile/agil.jpeg",
     socialMedia: [
-      { name: "Instagram", url: "https://https://instagram.com/11agil/" },
+      { name: "Instagram", url: "https://instagram.com/11agil/" },
       { name: "Linkedin", url: "https://www.linkedin.com/in/mohammad-agil/" },
-      { name: "Github", url: "https://https://github.com/Mohammadagil" },
+      { name: "Github", url: "https://github.com/Mohammadagil" },
     ],
   },
   {
