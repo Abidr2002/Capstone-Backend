@@ -95,21 +95,19 @@ const Signup = () => {
           if (Error === "Username and Email already registered") {
             setErrorMessage({
               ...errorMessage,
-              username:
-                "Username sudah terdaftar, silakan pilih username lain.",
-              email: "Email sudah terdaftar, silakan gunakan email lain.",
+              username: "Username already registered",
+              email: "Email already registered",
             });
           } else if (Error === "Username already registered") {
             setErrorMessage({
               ...errorMessage,
-              username:
-                "Username sudah terdaftar, silakan pilih username lain.",
+              username: "Username already registered",
               email: "", // Reset email error
             });
           } else if (Error === "Email already registered") {
             setErrorMessage({
               ...errorMessage,
-              email: "Email sudah terdaftar, silakan gunakan email lain.",
+              email: "Email already registered",
               username: "", // Reset username error
             });
           } else {
