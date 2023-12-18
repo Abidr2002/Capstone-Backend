@@ -141,11 +141,9 @@ const Calculator = () => {
       {auth ? (
         <>
           <div className="text-center text-sky-800 text-2xl font-bold mt-6 md:mt-10">
-            Result History
+            Calculation Rescord
           </div>
           <div className="flex flex-col md:flex-row justify-center md:space-x-1.6rem py-6 md:py-10 gap-1.6rem">
-            <NotesHistory userData={userData} />
-
             <div className="w-full md:w-[31.25rem]">
               <div className="mx-4 md:mx-[1.25rem] mb-3 md:mb-5 font-bold text-lg text-gray-600">
                 Calculation Track
