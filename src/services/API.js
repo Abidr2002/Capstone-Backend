@@ -3,7 +3,10 @@ import axios from 'axios';
 const getNewsData = async () => {
   try {
     const response = await axios.get(
-      `https://api-berita-indonesia.vercel.app/suara/health/`
+      `https://api-berita-indonesia.vercel.app/suara/health/`,
+      {
+        withCredentials: false,
+      }
     );
     return response.data.data.posts || [];
   } catch (error) {
