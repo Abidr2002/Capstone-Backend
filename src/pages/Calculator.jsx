@@ -30,7 +30,9 @@ const Calculator = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8888/get-calc");
+      const response = await axios.get(
+        "https://back-end-fitlife-hub.vercel.app/get-calc"
+      );
       setUserData(response.data.userData);
       console.log("Data fetched successfully:", response.data);
     } catch (error) {
@@ -79,7 +81,7 @@ const Calculator = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:8888/save-calc",
+        "https://back-end-fitlife-hub.vercel.app/save-calc",
         dataToSend
       );
       console.log("Data saved successfully:", res);
