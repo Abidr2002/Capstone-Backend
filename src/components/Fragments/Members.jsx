@@ -55,8 +55,8 @@ const members = [
     imageSrc: "/images/profile/abid.jpg",
     socialMedia: [
       { name: "Instagram", url: "https://#/" },
-      { name: "Linkedin", url: "https://#/" },
-      { name: "Github", url: "https://#" },
+      { name: "Linkedin", url: "https://https://www.linkedin.com/in/abid-romadhon/" },
+      { name: "Github", url: "https://https://github.com/Abidr2002" },
     ],
   },
 ];
