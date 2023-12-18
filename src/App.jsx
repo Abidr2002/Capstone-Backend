@@ -6,8 +6,8 @@ import Articles from "./pages/Articles";
 import Calculator from "./pages/Calculator";
 import AboutUs from "./pages/AboutUs";
 import Login from "./pages/Login";
-import Signup from "./pages/registration";
-import { AuthProvider } from "./components/hooks/AuthContext";
+import Signup from "./pages/Signup";
+import { AuthProvider } from "./auth/AuthContext";
 const App = () => {
   return (
     <div className="md:flex flex-col min-h-screen">

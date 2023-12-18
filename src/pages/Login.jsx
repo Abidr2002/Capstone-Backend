@@ -34,7 +34,7 @@ const Login = () => {
           alert("Error");
         }
       })
-      .then((err) => console.log(err));
+      .catch((err) => console.error(err));
   };
 
   return (

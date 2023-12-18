@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8888")
+      .get("http://localhost:8888/")
       .then((res) => {
         if (res.data.Status === "Success") {
           setUsername(res.data.data);
@@ -47,7 +47,6 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      // Gantilah URL sesuai dengan API logout yang Anda miliki
       const response = await axios.get("http://localhost:8888/logout");
 
       if (response.data.Status === "Success") {

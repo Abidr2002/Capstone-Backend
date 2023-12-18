@@ -42,7 +42,10 @@ const Signup = () => {
         password: "Password harus memiliki lebih dari 10 karakter",
       });
       return false;
-    } else if (formData.password !== formData.confirmPassword && formData.confirmPassword.length > 0) {
+    } else if (
+      formData.password !== formData.confirmPassword &&
+      formData.confirmPassword.length > 0
+    ) {
       setErrorMessage({
         ...errorMessage,
         confirmPassword: "Password dan konfirmasi password tidak cocok",
@@ -54,7 +57,12 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.username || !formData.email || !formData.password || !formData.confirmPassword) {
+    if (
+      !formData.username ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
       setErrorMessage({
         ...errorMessage,
         general: "Lengkapi seluruh formulir untuk mendaftar.",
@@ -87,13 +95,19 @@ const Signup = () => {
           if (Error === "Username and Email already registered") {
             setErrorMessage({
               ...errorMessage,
+<<<<<<< HEAD:src/pages/Registration.jsx
               username: "Username sudah terdaftar, silakan pilih username lain.",
+=======
+              username:
+                "Username sudah terdaftar, silakan pilih username lain.",
+>>>>>>> fd6585407b95ae20663bc3ff604e55a885694e0f:src/pages/Signup.jsx
               email: "Email sudah terdaftar, silakan gunakan email lain.",
             });
           } else if (Error === "Username already registered") {
             setErrorMessage({
               ...errorMessage,
-              username: "Username sudah terdaftar, silakan pilih username lain.",
+              username:
+                "Username sudah terdaftar, silakan pilih username lain.",
               email: "", // Reset email error
             });
           } else if (Error === "Email already registered") {
@@ -128,7 +142,18 @@ const Signup = () => {
           <div className="border rounded-full p-1 mr-2 flex-shrink-0">
             <FontAwesomeIcon icon={faEnvelope} className="mx-1" />
           </div>
+<<<<<<< HEAD:src/pages/Registration.jsx
           <input type="email" placeholder="Email" name="email" value={formData.email} onChange={handleChange} className="inputClass" />
+=======
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="inputClass"
+          />
+>>>>>>> fd6585407b95ae20663bc3ff604e55a885694e0f:src/pages/Signup.jsx
         </div>
         {errorMessage.email && <div className="text-red-500">{errorMessage.email}</div>}
         <div className="mb-4">
@@ -138,7 +163,13 @@ const Signup = () => {
             </div>
             <input type="password" placeholder="Create Password" name="password" value={formData.password} onChange={handleChange} className="inputClass w-full" />
           </div>
+<<<<<<< HEAD:src/pages/Registration.jsx
           {errorMessage.password && <div className="text-red-500">{errorMessage.password}</div>}
+=======
+          {errorMessage.password && (
+            <div className="text-red-500">{errorMessage.password}</div>
+          )}
+>>>>>>> fd6585407b95ae20663bc3ff604e55a885694e0f:src/pages/Signup.jsx
         </div>
         <div className="mb-4">
           <div className="flex items-center">
@@ -147,7 +178,13 @@ const Signup = () => {
             </div>
             <input type="password" placeholder="Confirm Password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} className="inputClass w-full" />
           </div>
+<<<<<<< HEAD:src/pages/Registration.jsx
           {errorMessage.confirmPassword && <div className="text-red-500">{errorMessage.confirmPassword}</div>}
+=======
+          {errorMessage.confirmPassword && (
+            <div className="text-red-500">{errorMessage.confirmPassword}</div>
+          )}
+>>>>>>> fd6585407b95ae20663bc3ff604e55a885694e0f:src/pages/Signup.jsx
         </div>
         <div className="flex justify-center">
           <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
