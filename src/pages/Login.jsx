@@ -31,7 +31,7 @@ const Login = () => {
           navigate("/");
           window.location.reload();
         } else {
-          alert("Error");
+          alert("Invalid username or password");
         }
       })
       .catch((err) => console.error(err));
