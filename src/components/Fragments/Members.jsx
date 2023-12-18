@@ -54,9 +54,9 @@ const members = [
     role: "Back-End Developer",
     imageSrc: "/images/profile/abid.jpg",
     socialMedia: [
-      { name: "Instagram", url: "https://#/" },
-      { name: "Linkedin", url: "https://https://www.linkedin.com/in/abid-romadhon/" },
-      { name: "Github", url: "https://https://github.com/Abidr2002" },
+      { name: "Instagram", url: "https://www.instagram.com/romadhonabid/" },
+      { name: "Linkedin", url: "https://www.linkedin.com/in/abid-romadhon/" },
+      { name: "Github", url: "https://github.com/Abidr2002" },
     ],
   },
 ];
